@@ -157,7 +157,7 @@ export default function VideoIntro({ videoSrc = '/hero.mp4' }) {
         <div className={styles.ctas} id="ct">
           <a href="#contact" className={styles.ctaPrimary}>Get in touch</a>
           <a href="#work" onClick={(e)=>{e.preventDefault();document.getElementById('work')?.scrollIntoView({behavior:'smooth'})}} className={styles.ctaSecondary}>View work ↓</a>
-          <a href="/Shaambhavi_CV.pdf" download="Shaambhavi_Sivappugaz_CV.pdf" className={styles.ctaCV}>
+          <a href="/Shaambhavi_Sivappugaz_Resume.pdf" download="Shaambhavi_Sivappugaz_Resume.pdf" className={styles.ctaCV}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             Download CV
           </a>

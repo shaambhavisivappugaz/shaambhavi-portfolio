@@ -44,7 +44,7 @@ const PROJECTS = [
   },
   {
     name:'Malware Classification using Deep Learning',
-    period:'2023',
+    period:'June-August 2023',
     status:'Published · Springer CVR 2023',
     tagline:'Comparative analysis of CNN, Random Forest, and Decision Tree for malware detection',
     points:[

@@ -26,7 +26,7 @@ export default function Navbar() {
           {NAV_LINKS.map(l => (
             <a key={l.href} href={l.href} className={styles.link}>{l.label}</a>
           ))}
-          <a href="/Shaambhavi_CV.pdf" download="Shaambhavi_Sivappugaz_CV.pdf" className={styles.cvBtn}>
+          <a href="/Shaambhavi_Sivappugaz_Resume.pdf" download="Shaambhavi_Sivappugaz_Resume.pdf" className={styles.cvBtn}>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" width="13" height="13"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
             CV
           </a>
