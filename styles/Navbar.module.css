@@ -1,7 +1,7 @@
 .nav {
   position: fixed;
   top: 0; left: 0; right: 0;
-  z-index: 50;
+  z-index: 100;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -20,6 +20,7 @@
   color: var(--text);
   text-decoration: none;
   letter-spacing: -0.02em;
+  flex-shrink: 0;
 }
 .logo span { color: var(--accent); }
 
@@ -39,6 +40,37 @@
 }
 .link:hover { color: var(--text); }
 
+.cvBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: 7px;
+  padding: 0.38em 0.9em;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+.cvBtn:hover {
+  background: rgba(245, 158, 11, 0.16);
+  border-color: rgba(245, 158, 11, 0.75);
+  box-shadow: 0 4px 14px rgba(245, 158, 11, 0.22);
+}
+:global([data-theme="light"]) .cvBtn {
+  color: #b45309;
+  background: rgba(245, 158, 11, 0.1);
+  border-color: rgba(180, 83, 9, 0.35);
+}
+:global([data-theme="light"]) .cvBtn:hover {
+  background: rgba(245, 158, 11, 0.18);
+  border-color: rgba(180, 83, 9, 0.6);
+  box-shadow: 0 4px 14px rgba(180, 83, 9, 0.15);
+}
+
 .right { display: flex; align-items: center; gap: 0.75rem; }
 
 .themeBtn {
@@ -54,4 +86,111 @@
 .themeBtn:hover { border-color: var(--accent); color: var(--accent); transform: rotate(20deg); }
 .themeBtn svg { width: 16px; height: 16px; }
 
-@media (max-width: 600px) { .links { display: none; } }
+/* ── Hamburger button (mobile only) ── */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 36px; height: 36px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 0;
+  transition: border-color 0.2s;
+}
+.hamburger span {
+  display: block;
+  width: 18px; height: 1.5px;
+  background: var(--text-muted);
+  border-radius: 2px;
+  transition: transform 0.3s ease, opacity 0.3s ease, background 0.2s;
+  transform-origin: center;
+}
+.hamburgerOpen span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); background: var(--accent); }
+.hamburgerOpen span:nth-child(2) { opacity: 0; transform: scaleX(0); }
+.hamburgerOpen span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); background: var(--accent); }
+
+/* ── Mobile full-screen menu ── */
+.mobileMenu {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  z-index: 90;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0;
+  padding: 5rem 2rem 3rem;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.35s ease;
+  pointer-events: none;
+}
+.mobileMenuOpen {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.mobileLink {
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  text-align: center;
+  font-size: 1.6rem;
+  font-family: 'Black Han Sans', 'Arial Black', sans-serif;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text);
+  text-decoration: none;
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid var(--border);
+  transition: color 0.2s;
+}
+.mobileLink:first-child { border-top: 1px solid var(--border); }
+.mobileLink:hover { color: var(--accent); }
+
+.mobileDivider {
+  width: 100%;
+  max-width: 300px;
+  height: 1px;
+  background: var(--border);
+  margin: 1.5rem 0 1rem;
+}
+
+.mobilethemeBtn {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.6em 1.4em;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.mobilethemeBtn:hover { color: var(--accent); border-color: var(--accent); }
+
+/* Backdrop behind menu */
+.menuOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 89;
+  background: rgba(0,0,0,0.4);
+}
+
+@media (max-width: 768px) {
+  .links { display: none; }
+  .hamburger { display: flex; }
+  /* hide desktop theme button on mobile (it's in the mobile menu) */
+  .themeBtn { display: none; }
+}

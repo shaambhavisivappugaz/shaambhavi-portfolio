@@ -29,7 +29,6 @@ export default function CinematicLayer() {
       const off = new Float32Array(count);
       const ini = new Float32Array(count * 3);
 
-      // Blue / cyan / white palette
       const blue  = new THREE.Color(0x4f8ef7);
       const cyan  = new THREE.Color(0x7dd3fc);
       const white = new THREE.Color(0xe0eeff);

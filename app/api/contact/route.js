@@ -9,8 +9,6 @@ export async function POST(req) {
     if (!name || !email || !message) {
       return Response.json({ error: 'Name, email and message are required.' }, { status: 400 });
     }
-
-    // Send notification to Shaambhavi
     await resend.emails.send({
       from: 'Portfolio Contact <onboarding@resend.dev>',
       to: 'shaambhavishaam@gmail.com',
@@ -35,7 +33,6 @@ export async function POST(req) {
       `,
     });
 
-    // Send auto-reply to sender
     await resend.emails.send({
       from: 'Shaambhavi Sivappugaz <onboarding@resend.dev>',
       to: email,

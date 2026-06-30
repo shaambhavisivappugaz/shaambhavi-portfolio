@@ -2,10 +2,6 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from '../styles/Portfolio.module.css';
 
-/* ══════════════════════════════════
-   DATA — from CV
-   ══════════════════════════════════ */
-
 const STATS = [
   { num:2.5,  suf:'+', label:'Years at Zoho',        desc:'Full-time Software Developer, enterprise systems', dec:1 },
   { num:60,   suf:'%', label:'DB Query Reduction',    desc:'Via caching & query optimisation at scale', dec:0 },
@@ -31,34 +27,37 @@ const PROJECTS = [
     color:'#00d4ff', glow:'rgba(0,212,255,.14)', span:'6',
   },
   {
-    name:'Apgar Score Prediction',
+    name:'Apgar Score Prediction using Machine Learning',
     period:'Jan 2023 – Apr 2023',
     status:'Published · Springer 2024',
-    tagline:'ML system for assessing newborn health using Apgar score analysis',
+    tagline:'Predictive modeling for neonatal health assessment',
     points:[
-      'Developed ML-based prediction system to assess newborn health conditions.',
-      'Implemented and compared multiple ML algorithms on healthcare datasets.',
-      'Built a Flask web app for model integration and real-time prediction.',
-      'Applied feature engineering and data preprocessing to boost model reliability.',
-      'Published findings in Springer WREC 2023 proceedings.',
+      'Designed an ML-based system to predict Apgar scores — a clinical measure of newborn well-being assessed at 1 and 5 minutes after birth across heartbeat, reflexes, color, muscle tone, and respiration.',
+      'Benchmarked 13 machine learning algorithms to identify the best-performing model for R² score optimisation, with a hybrid approach achieving 96.5% R².',
+      'Applied feature engineering and data preprocessing techniques to improve model accuracy and reliability on healthcare data.',
+      'Developed a Flask-based web application to integrate the trained model for real-time score prediction.',
+      'Findings contribute to neonatal research, supporting better-informed clinical decision-making for at-risk infants, including preterm and congenital-anomaly populations.',
+      'Published in Springer WREC 2023 proceedings.',
     ],
-    stack:['Python','Flask','Scikit-learn','Feature Engineering','ML'],
+    stack:['Python','Flask','Scikit-learn','Feature Engineering','Machine Learning'],
     color:'#34d399', glow:'rgba(52,211,153,.12)', span:'6',
   },
   {
-    name:'Mobile Malware Detection',
+    name:'Malware Classification using Deep Learning',
     period:'2023',
     status:'Published · Springer CVR 2023',
-    tagline:'Comparative study of ML models for mobile malware detection',
+    tagline:'Comparative analysis of CNN, Random Forest, and Decision Tree for malware detection',
     points:[
-      'Compared SVM, Random Forest, and Neural Network (MLP) approaches for Android malware classification.',
-      'Conducted data preprocessing and static feature extraction from Android app metadata to improve detection accuracy.',
-      'Achieved high classification accuracy with Random Forest outperforming SVM and MLP on balanced benchmark datasets.',
-      'Evaluated models using precision, recall, F1-score, and ROC-AUC metrics to ensure robust, generalizable results.',
-      'Designed a reproducible experimental pipeline with Scikit-learn, enabling fair cross-model comparison.',
-      'Published at CVR 2023, Algorithms for Intelligent Systems, Springer Singapore — contributing insights for selecting optimal ML classifiers in mobile security applications.',
+      'Built and evaluated an ensemble-inspired classification approach combining CNN, Random Forest, and Decision Tree models to detect and categorise malware across compiled and assembly-level files.',
+      'Trained models on malware image and classifier datasets sourced from Kaggle, benchmarking performance across architectures.',
+      'Achieved 95.19% training / 99.89% testing accuracy with CNN, outperforming Random Forest (91.62% / 99.36%) and Decision Tree (92% / 99.13%).',
+      'Demonstrated CNN\'s superiority for image-based malware datasets, offering anti-malware practitioners a flexible, computationally-aware classification framework.',
+      'Extended the study to mobile malware detection, comparing SVM, Random Forest, and MLP for Android app classification using static feature extraction from app metadata.',
+      'Evaluated all models on precision, recall, F1-score, and ROC-AUC to ensure robust, generalizable results, with Random Forest consistently outperforming alternatives on balanced datasets.',
+      'Built a reproducible Scikit-learn pipeline enabling fair, repeatable cross-model evaluation.',
+      'Published at CVR 2023, Algorithms for Intelligent Systems, Springer Singapore.',
     ],
-    stack:['Python','SVM','Random Forest','Neural Networks','Scikit-learn','Android Security','Research'],
+    stack:['Python','CNN','Random Forest','Decision Tree','SVM','Neural Networks','Scikit-learn','Android Security','Research'],
     color:'#a78bfa', glow:'rgba(167,139,250,.12)', span:'12',
   },
 ];
@@ -128,7 +127,7 @@ const EDUCATION = [
     deg:'Master of Information Technology',
     school:'Monash University',
     period:'Mar 2026 – Dec 2027 · Melbourne, Australia',
-    detail:'Full-time postgraduate program covering software engineering, AI, data systems, and cloud computing. Student Visa (500).',
+    detail:'Full-time postgraduate program with coursework spanning software engineering, artificial intelligence, distributed data systems, and cloud computing. Building on professional experience in enterprise software development, with a focus on scalable system design, applied machine learning, and modern cloud-native architectures.',
     color:'#00d4ff', orb:'rgba(0,212,255,.07)',
     leadership:[
       'Member — Monash Student Association (MSA)',
@@ -169,9 +168,7 @@ const PUBLICATIONS = [
 
 const SUGGESTIONS = ['What stack does she use?','Is she open to jobs in Australia?','Tell me about her projects','What are her publications?'];
 
-/* ══════════════════════════════════
-   HOOKS
-   ══════════════════════════════════ */
+
 function useVis(threshold=0.12) {
   const ref = useRef(null);
   useEffect(()=>{
@@ -187,8 +184,15 @@ function useCountUp(target, dec, duration=1800) {
   const ref=useRef(null);
   useEffect(()=>{
     const el=ref.current; if(!el) return;
+    // Fallback: make visible after 2s even if IntersectionObserver doesn't fire (mobile Safari)
+    const fallback=setTimeout(()=>{
+      el.style.opacity='1'; el.style.transform='translateY(0)';
+      setVal(target);
+    },2000);
     const obs=new IntersectionObserver(([e])=>{
       if(!e.isIntersecting) return; obs.disconnect();
+      clearTimeout(fallback);
+      el.style.opacity='1'; el.style.transform='translateY(0)';
       const start=performance.now();
       const tick=(now)=>{
         const p=Math.min((now-start)/duration,1);
@@ -197,19 +201,17 @@ function useCountUp(target, dec, duration=1800) {
         if(p<1) requestAnimationFrame(tick); else setVal(target);
       };
       requestAnimationFrame(tick);
-    },{threshold:.5});
-    obs.observe(el); return ()=>obs.disconnect();
+    },{threshold:0.1});
+    obs.observe(el); return ()=>{obs.disconnect();clearTimeout(fallback);};
   },[target,dec,duration]);
   return {val,ref};
 }
 
-/* ══════════════════════════════════
-   SUB-COMPONENTS
-   ══════════════════════════════════ */
+
 function StatItem({stat,delay}) {
   const {val,ref}=useCountUp(stat.num,stat.dec);
   return (
-    <div ref={ref} className={`${styles.statItem} ${styles.r}`} style={{'--d':`${delay}s`}}>
+    <div ref={ref} className={styles.statItem} style={{'--d':`${delay}s`}}>
       <span className={styles.statNum}>{stat.dec===0?val:val.toFixed(stat.dec)}<span className={styles.statSuffix}>{stat.suf}</span></span>
       <span className={styles.statLabel}>{stat.label}</span>
       <span className={styles.statDesc}>{stat.desc}</span>
@@ -227,10 +229,41 @@ function RevCard({children,className,style,threshold=0.08}) {
   return <div ref={ref} className={className} style={style}>{children}</div>;
 }
 
+function EmailCta() {
+  const email = 'shaambhavishaam@gmail.com';
+  const [copied, setCopied] = useState(false);
+  const handleClick = async (e) => {
+    // Copy to clipboard as fallback (don't prevent default so mailto: fires)
+    try {
+      await navigator.clipboard.writeText(email);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2500);
+    } catch {}
+  };
+  return (
+    <div>
+      <div className={styles.cInfoRow}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" width="17" height="17"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href={`mailto:${email}`} className={styles.cEmailLink} onClick={handleClick}>
+          {email}
+        </a>
+      </div>
+      {copied && <span className={styles.copiedBadge}>Copied!</span>}
+    </div>
+  );
+}
+
+const isValidEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
+
 function ContactForm() {
   const [f,setF]=useState({name:'',email:'',subject:'',message:''});
   const [st,setSt]=useState('idle');
-  const set=k=>e=>setF(p=>({...p,[k]:e.target.value}));
+  const [emailErr,setEmailErr]=useState('');
+  const set=k=>e=>{
+    const val=e.target.value;
+    setF(p=>({...p,[k]:val}));
+    if(k==='email') setEmailErr(val && !isValidEmail(val) ? 'Please enter a valid email address.' : '');
+  };
 
   const openMailto=()=>{
     const sub=encodeURIComponent(f.subject||`Portfolio message from ${f.name}`);
@@ -240,6 +273,7 @@ function ContactForm() {
 
   const submit=async()=>{
     if(!f.name||!f.email||!f.message) return;
+    if(!isValidEmail(f.email)){ setEmailErr('Please enter a valid email address.'); return; }
     setSt('sending');
     try{
       const res=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(f)});
@@ -252,17 +286,24 @@ function ContactForm() {
   return (
     <div className={styles.form}>
       <div className={styles.fRow}>
-        <div className={styles.fGroup}><label className={styles.fLabel}>Name *</label><input className={styles.fInput} placeholder="Your name" value={f.name} onChange={set('name')}/></div>
-        <div className={styles.fGroup}><label className={styles.fLabel}>Email *</label><input className={styles.fInput} type="email" placeholder="your@email.com" value={f.email} onChange={set('email')}/></div>
+        <div className={styles.fGroup}><input className={styles.fInput} placeholder="Name" value={f.name} onChange={set('name')}/></div>
+        <div className={styles.fGroup}>
+          <input className={`${styles.fInput} ${emailErr ? styles.fInputErr : ''}`} type="email" placeholder="Email" value={f.email} onChange={set('email')} onBlur={()=>{ if(f.email&&!isValidEmail(f.email)) setEmailErr('Please enter a valid email address.'); }}/>
+          {emailErr && <span className={styles.fErrMsg}>{emailErr}</span>}
+        </div>
       </div>
-      <div className={styles.fGroup}><label className={styles.fLabel}>Subject</label><input className={styles.fInput} placeholder="Job opportunity / Collaboration / Other" value={f.subject} onChange={set('subject')}/></div>
-      <div className={styles.fGroup}><label className={styles.fLabel}>Message *</label><textarea className={styles.fTextarea} placeholder="Tell me about the opportunity or project..." value={f.message} onChange={set('message')}/></div>
-      <div style={{display:'flex',gap:'.75rem',flexWrap:'wrap',alignItems:'center'}}>
-        <button className={styles.fBtn} onClick={submit} disabled={st==='sending'}>{st==='sending'?'Sending…':'Send message →'}</button>
-        <button className={styles.fBtn} onClick={openMailto} style={{background:'transparent',border:'1px solid var(--border-accent)',color:'var(--accent)',boxShadow:'none'}}>Open in Mail app ✉</button>
-      </div>
-      {st==='success'&&<div className={styles.fOk}>✓ Sent! I'll reply within 1–2 days.</div>}
-      {st==='mailto' &&<div className={styles.fOk}>Click "Open in Mail app" above to send directly from your email client.</div>}
+      <div className={styles.fGroup}><input className={styles.fInput} placeholder="Subject" value={f.subject} onChange={set('subject')}/></div>
+      <div className={styles.fGroup}><textarea className={styles.fTextarea} placeholder="Message" value={f.message} onChange={set('message')}/></div>
+      <button className={styles.fBtn} onClick={submit} disabled={st==='sending'}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        {st==='sending' ? 'Sending…' : 'Send Message'}
+      </button>
+      <p className={styles.fResponseTime}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" width="13" height="13"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        Avg. response time: within 24 hours
+      </p>
+      {st==='success'&&<div className={styles.fOk}>✓ Sent! I'll reply within 24 hours.</div>}
+      {st==='mailto' &&<div className={styles.fOk}>✓ Your email client should open now. You can also reach me directly at shaambhavishaam@gmail.com</div>}
     </div>
   );
 }
@@ -328,9 +369,7 @@ function Chatbot() {
   );
 }
 
-/* ══════════════════════════════════
-   MAIN
-   ══════════════════════════════════ */
+
 export default function Portfolio() {
   const eyP=useVis(); const ttP=useVis();
   const eyE=useVis(); const ttE=useVis();
@@ -341,13 +380,6 @@ export default function Portfolio() {
 
   return (
     <div className={styles.wrap}>
-      {/* ── STATS ── */}
-      <div className={styles.statsWrap}>
-        <div className={styles.statsGrid}>
-          {STATS.map((s,i)=><StatItem key={s.label} stat={s} delay={i*.1}/>)}
-        </div>
-      </div>
-
       {/* ── PROJECTS ── */}
       <section id="work" className={styles.section}>
         <div className={styles.inner}>
@@ -369,7 +401,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* ── EXPERIENCE ── */}
+      {}
       <section id="experience" className={styles.section}>
         <div className={styles.inner}>
           <p ref={eyE} className={styles.eyebrow}>Career</p>
@@ -398,7 +430,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* ── SKILLS ── */}
+      {}
       <section id="skills" className={styles.section}>
         <div className={styles.inner}>
           <p ref={eyS} className={styles.eyebrow}>Toolkit</p>
@@ -414,7 +446,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* ── EDUCATION ── */}
+      {}
       <section id="education" className={styles.section}>
         <div className={styles.inner}>
           <p ref={eyEd} className={styles.eyebrow}>Education</p>
@@ -439,7 +471,7 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* ── PUBLICATIONS ── */}
+      {}
       <section id="publications" className={styles.section}>
         <div className={styles.inner}>
           <p ref={eyPub} className={styles.eyebrow}>Research</p>
@@ -464,23 +496,29 @@ export default function Portfolio() {
         </div>
       </section>
 
-      {/* ── CONTACT ── */}
+      {}
       <section id="contact" className={styles.section}>
         <div className={styles.inner}>
           <div ref={ctH} className={styles.contactHero}>
             <div className={styles.availBadge}><span className={styles.availDot}/><span>Open to opportunities across Australia</span></div>
             <h2 className={styles.contactBig}>Let's build<span>something great</span></h2>
-            <p className={styles.contactSub}>Full-time, part-time, contracts, or collaborations in software engineering & AI. Student visa (500) — happy to discuss sponsorship or graduate pathways.</p>
+            <p className={styles.contactSub}>Available for full-time, part-time, contract, and collaborative roles in software engineering and AI. I'm currently on a Student Visa (500) and welcome conversations about sponsorship or graduate pathway opportunities.</p>
           </div>
           <div className={styles.contactGrid}>
             <div className={styles.contactLeft}>
-              <a href="mailto:shaambhavishaam@gmail.com" className={styles.cEmail}><span>✉</span>shaambhavishaam@gmail.com</a>
-              <div className={styles.cLinks}>
-                <a href="https://www.linkedin.com/in/shaambhavi-sivappugaz" target="_blank" rel="noreferrer" className={styles.cLink}>
-                  <span className={styles.cLinkIcon}>in</span>LinkedIn — Shaambhavi Sivappugaz
+              <div className={styles.cInfoBlock}>
+                <EmailCta/>
+                <div className={styles.cInfoRow}>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" width="17" height="17"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <span>Melbourne, Australia</span>
+                </div>
+              </div>
+              <div className={styles.cSocials}>
+                <a href="https://github.com/shaambhavisivappugaz" target="_blank" rel="noreferrer" className={styles.cSocialBtn} aria-label="GitHub">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.02 10.02 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
                 </a>
-                <a href="https://github.com/shaambhavisivappugaz" target="_blank" rel="noreferrer" className={styles.cLink}>
-                  <span className={styles.cLinkIcon}>gh</span>GitHub — shaambhavisivappugaz
+                <a href="https://www.linkedin.com/in/shaambhavi-sivappugaz" target="_blank" rel="noreferrer" className={styles.cSocialBtn} aria-label="LinkedIn">
+                  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
                 </a>
               </div>
             </div>

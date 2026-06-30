@@ -1,10 +1,6 @@
-/* ══════════════════════════════════════
-   PORTFOLIO — premium, readable
-   ══════════════════════════════════════ */
 
 .wrap { background: transparent; color: var(--text); font-family: 'Inter', system-ui, sans-serif; position: relative; z-index: 1; }
 
-/* ── Section wrapper ── */
 .section {
   padding: clamp(5rem,10vw,9rem) 0;
   border-top: 1px solid var(--section-sep);
@@ -16,7 +12,6 @@
   padding: 0 clamp(1.5rem,6vw,5rem);
 }
 
-/* ── Eyebrow ── */
 .eyebrow {
   font-size: 0.72rem; font-weight: 700;
   letter-spacing: 0.26em; text-transform: uppercase;
@@ -29,7 +24,6 @@
 .eyebrow::before { content:''; width:28px; height:1.5px; background:var(--accent); }
 .eyebrow.v { opacity:1; transform:translateY(0); }
 
-/* ── Section title ── */
 .stitle {
   font-family: 'Black Han Sans','Arial Black',sans-serif;
   font-size: clamp(3rem,6.5vw,6rem);
@@ -47,16 +41,14 @@
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
 
-/* ── Reveal util ── */
+
 .r {
   opacity: 0; transform: translateY(20px);
   transition: opacity .7s ease var(--d,0s), transform .7s ease var(--d,0s);
 }
 .r.v { opacity:1; transform:translateY(0); }
 
-/* ════════════════════════════════
-   STATS
-   ════════════════════════════════ */
+
 .statsWrap {
   border-top: 1px solid var(--section-sep);
   border-bottom: 1px solid var(--section-sep);
@@ -90,9 +82,7 @@
 }
 .statDesc { font-size: .86rem; color: var(--text-faint); margin-top: .25rem; line-height: 1.55; }
 
-/* ════════════════════════════════
-   PROJECTS — Bento
-   ════════════════════════════════ */
+
 .bentoGrid {
   display: grid;
   grid-template-columns: repeat(12,1fr);
@@ -149,7 +139,7 @@
   color: var(--text); line-height: 1.05; margin: 0;
 }
 .bTagline { font-size: .88rem; color: var(--text-muted); margin: 0; font-style: italic; }
-.bDesc { font-size: clamp(.88rem,1.05vw,.96rem); color: var(--text-muted); line-height: 1.75; flex:1; }
+.bDesc { font-size: clamp(.88rem,1.05vw,.96rem); color: var(--text-muted); line-height: 1.75; }
 .bPoints {
   list-style: none; padding:0; margin:0;
   display: flex; flex-direction: column; gap: .5rem; flex:1;
@@ -228,9 +218,7 @@
   border-radius:99px; padding:.2em .7em;
 }
 
-/* ════════════════════════════════
-   SKILLS
-   ════════════════════════════════ */
+
 .skillsOuter { display:flex; flex-direction:column; gap:2.5rem; }
 
 .skillCatBlock {
@@ -267,9 +255,7 @@
   box-shadow: 0 1px 4px rgba(0,0,80,.05);
 }
 
-/* ════════════════════════════════
-   EDUCATION
-   ════════════════════════════════ */
+
 .eduGrid { display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; }
 
 .eduCard {
@@ -313,9 +299,7 @@
 .eduLeadList li { font-size:.84rem; color:var(--text-muted); padding-left:.9rem; position:relative; }
 .eduLeadList li::before { content:'—'; position:absolute; left:0; color:var(--accent); opacity:.55; font-size:.72rem; }
 
-/* ════════════════════════════════
-   PUBLICATIONS
-   ════════════════════════════════ */
+
 .pubList { display:flex; flex-direction:column; gap:1.3rem; }
 .pubCard {
   background:var(--bg-card); border:1px solid var(--border); border-radius:16px;
@@ -347,9 +331,7 @@
 .pubVenue { font-size:.88rem; color:var(--text-muted); line-height:1.6; }
 .pubAuthors { font-size:.82rem; color:var(--text-faint); font-weight:500; }
 
-/* ════════════════════════════════
-   CONTACT
-   ════════════════════════════════ */
+
 .contactHero { text-align:center; margin-bottom:4.5rem; opacity:0; transform:translateY(20px); transition:opacity .8s, transform .8s; }
 .contactHero.v { opacity:1; transform:translateY(0); }
 .contactBig {
@@ -370,56 +352,75 @@
 .availDot { width:7px; height:7px; border-radius:50%; background:var(--green); animation:blink 2s ease infinite; }
 @keyframes blink { 0%,100%{opacity:1}50%{opacity:.3} }
 
-.contactGrid { display:grid; grid-template-columns:1fr 1.3fr; gap:4rem; align-items:start; }
+.contactGrid { display:grid; grid-template-columns:1fr 1.4fr; gap:5rem; align-items:start; }
 
-.contactLeft { display:flex; flex-direction:column; gap:1.2rem; }
-.cEmail {
-  font-family:'Black Han Sans','Arial Black',sans-serif;
-  font-size:clamp(1rem,1.9vw,1.35rem); font-weight:900; text-transform:uppercase;
-  color:var(--text); text-decoration:none; display:flex; align-items:center; gap:.55rem;
-  transition:color .2s;
-}
-.cEmail:hover { color:var(--accent); }
-.cLinks { display:flex; flex-direction:column; gap:.6rem; }
-.cLink {
-  display:flex; align-items:center; gap:.8rem;
-  font-size:.9rem; font-weight:500; color:var(--text-muted);
-  text-decoration:none; padding:.9rem 1.1rem;
-  background:var(--bg-card); border:1px solid var(--border); border-radius:12px;
-  transition: color .2s, border-color .2s, transform .2s, box-shadow .2s;
-}
-.cLink:hover { color:var(--text); border-color:var(--border-accent); transform:translateX(4px); }
-:global([data-theme="light"]) .cLink {
-  box-shadow: 0 2px 12px rgba(0,0,80,.05);
-}
-.cLinkIcon { width:34px; height:34px; border-radius:8px; background:var(--pill-bg); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:.82rem; font-weight:700; color:var(--accent); }
+/* ── Contact left panel ── */
+.contactLeft { display:flex; flex-direction:column; gap:2rem; }
 
-/* Form */
-.form { display:flex; flex-direction:column; gap:.95rem; }
-.fRow { display:grid; grid-template-columns:1fr 1fr; gap:.95rem; }
-.fGroup { display:flex; flex-direction:column; gap:.4rem; }
-.fLabel { font-size:.7rem; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--text-muted); }
+.cInfoBlock { display:flex; flex-direction:column; gap:.7rem; }
+.cInfoRow {
+  display:flex; align-items:center; gap:.7rem;
+  font-size:.97rem; color:var(--text-muted); font-weight:400; line-height:1.5;
+}
+.cInfoRow svg { flex-shrink:0; opacity:.6; }
+.cEmailLink {
+  color:var(--text-muted); text-decoration:none; font-size:.97rem; font-weight:400;
+  transition:color .2s; background:none; border:none; padding:0; cursor:pointer;
+  font-family:inherit;
+}
+.cEmailLink:hover { color:var(--accent); }
+
+.copiedBadge {
+  display:inline-block; margin-top:.3rem;
+  font-size:.68rem; font-weight:600; letter-spacing:.06em;
+  color:#34d399; background:rgba(52,211,153,.1);
+  border:1px solid rgba(52,211,153,.3); border-radius:99px;
+  padding:.22em .8em;
+  animation: fadeIn .2s ease;
+}
+@keyframes fadeIn { from{opacity:0;transform:translateY(-4px)} to{opacity:1;transform:translateY(0)} }
+
+.cSocials { display:flex; gap:.7rem; }
+.cSocialBtn {
+  width:42px; height:42px; border-radius:10px;
+  background:var(--bg-card); border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--text-muted); text-decoration:none;
+  font-size:.72rem; font-weight:700; letter-spacing:.04em;
+  transition:color .2s, border-color .2s, transform .2s;
+}
+.cSocialBtn:hover { color:var(--accent); border-color:var(--border-accent); transform:translateY(-2px); }
+.cSocialBtn svg { width:18px; height:18px; }
+
+/* ── Contact form ── */
+.form { display:flex; flex-direction:column; gap:.85rem; }
+.fRow { display:grid; grid-template-columns:1fr 1fr; gap:.85rem; }
+.fGroup { display:flex; flex-direction:column; gap:.35rem; }
 .fInput, .fTextarea {
   background:var(--input-bg); border:1px solid var(--input-border); border-radius:10px;
-  padding:.82em 1.05em; color:var(--text); font-family:'Inter',system-ui,sans-serif; font-size:.92rem;
+  padding:.88em 1.1em; color:var(--text); font-family:'Inter',system-ui,sans-serif; font-size:.93rem;
   outline:none; width:100%; transition:border-color .2s, box-shadow .2s;
 }
 .fInput:focus, .fTextarea:focus { border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-glow); }
 .fInput::placeholder, .fTextarea::placeholder { color:var(--text-faint); }
-.fTextarea { resize:vertical; min-height:135px; }
+.fInputErr { border-color:#f87171 !important; box-shadow:0 0 0 3px rgba(248,113,113,.15) !important; }
+.fErrMsg { font-size:.72rem; color:#f87171; font-weight:500; }
+.fTextarea { resize:vertical; min-height:140px; }
 :global([data-theme="light"]) .fInput,
 :global([data-theme="light"]) .fTextarea {
   box-shadow: 0 1px 6px rgba(0,0,80,.05);
 }
 .fBtn {
-  font-size:.9rem; font-weight:700; letter-spacing:.05em; color:#fff;
+  font-size:.93rem; font-weight:700; letter-spacing:.03em; color:#fff;
   background:linear-gradient(135deg, var(--accent2), var(--accent));
-  border:none; border-radius:10px; padding:.92em 2.4em; cursor:pointer;
-  width:fit-content; box-shadow:0 4px 20px var(--accent-glow);
+  border:none; border-radius:10px; padding:1em 1.5em; cursor:pointer;
+  width:100%; box-shadow:0 4px 20px var(--accent-glow);
   transition:transform .2s, box-shadow .2s, opacity .2s;
+  display:flex; align-items:center; justify-content:center; gap:.5em;
 }
 .fBtn:hover { transform:translateY(-2px); box-shadow:0 8px 30px rgba(0,100,255,.3); }
 .fBtn:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+.fResponseTime { font-size:.76rem; color:var(--text-faint); text-align:center; display:flex; align-items:center; justify-content:center; gap:.4em; }
 .fOk { font-size:.88rem; color:var(--green); background:rgba(52,211,153,.07); border:1px solid rgba(52,211,153,.2); border-radius:9px; padding:.8em 1.1em; }
 .fErr { font-size:.88rem; color:#f87171; background:rgba(248,113,113,.07); border:1px solid rgba(248,113,113,.2); border-radius:9px; padding:.8em 1.1em; }
 .fMailFallback { font-size:.82rem; color:var(--text-muted); text-align:center; }
@@ -433,9 +434,7 @@
   .availBadge { white-space:normal; text-align:center; justify-content:center; }
 }
 
-/* ════════════════════════════════
-   CHATBOT
-   ════════════════════════════════ */
+
 .chatWidget { position:fixed; bottom:1.8rem; right:1.8rem; z-index:100; display:flex; flex-direction:column; align-items:flex-end; gap:.8rem; }
 .chatToggle {
   width:54px; height:54px; border-radius:50%;
@@ -503,7 +502,6 @@
 .footerLink { font-size:.76rem; font-weight:500; color:var(--text-muted); text-decoration:none; transition:color .2s; letter-spacing:.04em; }
 .footerLink:hover { color:var(--accent); }
 
-/* ── Mobile responsive ── */
 @media (max-width: 900px) {
   .bentoGrid { grid-template-columns: 1fr 1fr; }
   .bSpan6,.bSpan7,.bSpan5,.bSpan8,.bSpan4 { grid-column: span 1; }

@@ -18,6 +18,22 @@ export default function VideoIntro({ videoSrc = '/hero.mp4' }) {
     return () => clearTimeout(t);
   }, []);
 
+  // Unmute main video on first user interaction (ambient video stays muted — visual only)
+  useEffect(() => {
+    const unlock = () => {
+      const v = videoRef.current;
+      if (v && v.muted) { v.muted = false; v.play().catch(()=>{}); }
+      setMuted(false);
+      setShowHint(false);
+    };
+    document.addEventListener('click',     unlock, { once: true });
+    document.addEventListener('touchstart', unlock, { once: true });
+    return () => {
+      document.removeEventListener('click',     unlock);
+      document.removeEventListener('touchstart', unlock);
+    };
+  }, []);
+
   useEffect(() => {
     const els = [
       { id: 'tg', d: 300 }, { id: 'n1', d: 600 }, { id: 'n2', d: 800 },
@@ -30,7 +46,6 @@ export default function VideoIntro({ videoSrc = '/hero.mp4' }) {
     return () => timers.forEach(clearTimeout);
   }, []);
 
-  /* ── Particle / glitter canvas ── */
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -109,11 +124,11 @@ export default function VideoIntro({ videoSrc = '/hero.mp4' }) {
   };
 
   const toggleMute = () => {
-    const v = videoRef.current, a = ambientRef.current;
+    const v = videoRef.current;
     const next = !muted;
     setMuted(next);
     if (v) v.muted = next;
-    if (a) a.muted = next;
+    // ambientRef stays muted always — it's visual only
   };
 
   return (
@@ -131,7 +146,7 @@ export default function VideoIntro({ videoSrc = '/hero.mp4' }) {
 
         <p className={styles.role}     id="rl">Full-Stack Developer &amp; AI Engineer</p>
         <p className={styles.subtitle} id="sb">
-          2.5+ yrs at Zoho building distributed systems at scale. Monash MIT student &amp; Web Dev Intern at Digital Nexus AI — shipping production AI products with Next.js, Claude API &amp; Supabase.
+          Software Developer with 2.5+ years at Zoho Corporation, currently pursuing a Master of IT at Monash University. Specialised in Java-based distributed systems, REST APIs, and enterprise log processing using Kafka, Elasticsearch, and HDFS.
         </p>
 
         <div className={styles.available} id="av">
@@ -142,6 +157,10 @@ export default function VideoIntro({ videoSrc = '/hero.mp4' }) {
         <div className={styles.ctas} id="ct">
           <a href="#contact" className={styles.ctaPrimary}>Get in touch</a>
           <a href="#work" onClick={(e)=>{e.preventDefault();document.getElementById('work')?.scrollIntoView({behavior:'smooth'})}} className={styles.ctaSecondary}>View work ↓</a>
+          <a href="/Shaambhavi_CV.pdf" download="Shaambhavi_Sivappugaz_CV.pdf" className={styles.ctaCV}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="14" height="14"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download CV
+          </a>
         </div>
 
         <div className={styles.statsStrip} id="ss">
