@@ -58,7 +58,6 @@ export default function Navbar() {
             {l.label}
           </a>
         ))}
-        <div className={styles.mobileDivider}/>
         <button className={styles.mobilethemeBtn} onClick={toggle}>
           {theme === 'dark' ? '☀ Light mode' : '☾ Dark mode'}
         </button>
