@@ -11,8 +11,8 @@ const STATS = [
 
 const PROJECTS = [
   {
-    name:'Personal Portfolio — Cinematic Site',
-    period:'2026',
+    name:'Personal Portfolio',
+    period:'Jun 2026',
     status:'Live',
     tagline:'Immersive, AI-assisted developer portfolio built from scratch',
     desc:'Designed and built this site end-to-end: a cinematic hero with a video intro, a Three.js particle starfield background, scroll-reveal animations, and a built-in AI chatbot that answers visitor questions about my experience.',
@@ -123,7 +123,7 @@ const SKILLS = [
 
 const EDUCATION = [
   {
-    badge:'2026 – 2027',
+    badge:'WAM 4.0 / 4.0',
     deg:'Master of Information Technology',
     school:'Monash University',
     period:'Mar 2026 – Dec 2027 · Melbourne, Australia',
@@ -258,27 +258,29 @@ const isValidEmail = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
 function ContactForm() {
   const [f,setF]=useState({name:'',email:'',subject:'',message:''});
   const [st,setSt]=useState('idle');
-  const [emailErr,setEmailErr]=useState('');
+  const [errs,setErrs]=useState({name:'',email:'',message:''});
+
   const set=k=>e=>{
     const val=e.target.value;
     setF(p=>({...p,[k]:val}));
-    if(k==='email') setEmailErr(val && !isValidEmail(val) ? 'Please enter a valid email address.' : '');
-  };
-
-  const openMailto=()=>{
-    const sub=encodeURIComponent(f.subject||`Portfolio message from ${f.name}`);
-    const body=encodeURIComponent(`Hi Shaambhavi,\n\n${f.message}\n\nBest,\n${f.name}\n${f.email}`);
-    window.location.href=`mailto:shaambhavishaam@gmail.com?subject=${sub}&body=${body}`;
+    if(errs[k]) setErrs(p=>({...p,[k]:''}));
+    if(k==='email' && val && !isValidEmail(val)) setErrs(p=>({...p,email:'Please enter a valid email address.'}));
+    if(k==='email' && isValidEmail(val)) setErrs(p=>({...p,email:''}));
   };
 
   const submit=async()=>{
-    if(!f.name||!f.email||!f.message) return;
-    if(!isValidEmail(f.email)){ setEmailErr('Please enter a valid email address.'); return; }
+    const newErrs={
+      name: !f.name.trim() ? 'Name is required.' : '',
+      email: !f.email.trim() ? 'Email is required.' : !isValidEmail(f.email) ? 'Please enter a valid email address.' : '',
+      message: !f.message.trim() ? 'Message is required.' : '',
+    };
+    setErrs(newErrs);
+    if(Object.values(newErrs).some(Boolean)) return;
     setSt('sending');
     try{
       const res=await fetch('/api/contact',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(f)});
       const d=await res.json();
-      if(d.success){setSt('success');setF({name:'',email:'',subject:'',message:''});setTimeout(()=>setSt('idle'),6000);}
+      if(d.success){setSt('success');setF({name:'',email:'',subject:'',message:''});setErrs({name:'',email:'',message:''});setTimeout(()=>setSt('idle'),6000);}
       else{setSt('mailto');setTimeout(()=>setSt('idle'),8000);}
     }catch{setSt('mailto');setTimeout(()=>setSt('idle'),8000);}
   };
@@ -286,14 +288,20 @@ function ContactForm() {
   return (
     <div className={styles.form}>
       <div className={styles.fRow}>
-        <div className={styles.fGroup}><input className={styles.fInput} placeholder="Name" value={f.name} onChange={set('name')}/></div>
         <div className={styles.fGroup}>
-          <input className={`${styles.fInput} ${emailErr ? styles.fInputErr : ''}`} type="email" placeholder="Email" value={f.email} onChange={set('email')} onBlur={()=>{ if(f.email&&!isValidEmail(f.email)) setEmailErr('Please enter a valid email address.'); }}/>
-          {emailErr && <span className={styles.fErrMsg}>{emailErr}</span>}
+          <input className={`${styles.fInput} ${errs.name ? styles.fInputErr : ''}`} placeholder="Name *" value={f.name} onChange={set('name')}/>
+          {errs.name && <span className={styles.fErrMsg}>{errs.name}</span>}
+        </div>
+        <div className={styles.fGroup}>
+          <input className={`${styles.fInput} ${errs.email ? styles.fInputErr : ''}`} type="email" placeholder="Email *" value={f.email} onChange={set('email')} onBlur={()=>{ if(f.email&&!isValidEmail(f.email)) setErrs(p=>({...p,email:'Please enter a valid email address.'})); }}/>
+          {errs.email && <span className={styles.fErrMsg}>{errs.email}</span>}
         </div>
       </div>
       <div className={styles.fGroup}><input className={styles.fInput} placeholder="Subject" value={f.subject} onChange={set('subject')}/></div>
-      <div className={styles.fGroup}><textarea className={styles.fTextarea} placeholder="Message" value={f.message} onChange={set('message')}/></div>
+      <div className={styles.fGroup}>
+        <textarea className={`${styles.fTextarea} ${errs.message ? styles.fInputErr : ''}`} placeholder="Message *" value={f.message} onChange={set('message')}/>
+        {errs.message && <span className={styles.fErrMsg}>{errs.message}</span>}
+      </div>
       <button className={styles.fBtn} onClick={submit} disabled={st==='sending'}>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width="16" height="16"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         {st==='sending' ? 'Sending…' : 'Send Message'}
