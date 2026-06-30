@@ -1,0 +1,70 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root, [data-theme="dark"] {
+  --bg:             #03060f;
+  --bg2:            #070d1c;
+  --bg-card:        rgba(255,255,255,0.04);
+  --border:         rgba(255,255,255,0.09);
+  --border-accent:  rgba(0,212,255,0.22);
+  --text:           #eef2ff;
+  --text-muted:     #aab4d8;
+  --text-faint:     #6e7aa0;
+  --accent:         #00d4ff;
+  --accent2:        #2563eb;
+  --accent-glow:    rgba(0,212,255,0.15);
+  --green:          #34d399;
+  --purple:         #a78bfa;
+  --input-bg:       rgba(255,255,255,0.06);
+  --input-border:   rgba(255,255,255,0.12);
+  --pill-bg:        rgba(0,212,255,0.08);
+  --pill-border:    rgba(0,212,255,0.2);
+  --pill-text:      #7dd3fc;
+  --nav-bg:         rgba(3,6,15,0.85);
+  --chat-bg:        #070d1c;
+  --shadow:         rgba(0,0,0,0.45);
+  --section-sep:    rgba(255,255,255,0.07);
+}
+
+[data-theme="light"] {
+  --bg:             #f5f7ff;
+  --bg2:            #eceffe;
+  --bg-card:        rgba(255,255,255,0.95);
+  --border:         rgba(0,0,50,0.1);
+  --border-accent:  rgba(37,99,235,0.28);
+  --text:           #0a0f2e;
+  --text-muted:     #354070;
+  --text-faint:     #5566a0;
+  --accent:         #2563eb;
+  --accent2:        #0ea5e9;
+  --accent-glow:    rgba(37,99,235,0.14);
+  --green:          #059669;
+  --purple:         #7c3aed;
+  --input-bg:       #ffffff;
+  --input-border:   rgba(0,0,50,0.15);
+  --pill-bg:        rgba(37,99,235,0.08);
+  --pill-border:    rgba(37,99,235,0.22);
+  --pill-text:      #1d4ed8;
+  --nav-bg:         #f5f7ff;
+  --chat-bg:        #ffffff;
+  --shadow:         rgba(0,0,50,0.12);
+  --section-sep:    rgba(0,0,50,0.08);
+}
+
+body {
+  background: transparent;
+  color: var(--text);
+  font-family: 'Inter', system-ui, sans-serif;
+  transition: background 0.4s, color 0.4s;
+  overflow-x: hidden;
+}
+html { background: var(--bg); }
+
+::selection { background: rgba(0,212,255,0.25); color: var(--text); }
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-accent); border-radius: 99px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
