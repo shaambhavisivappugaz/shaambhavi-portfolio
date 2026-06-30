@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#03060f"/>
+      <stop offset="50%" style="stop-color:#0a0f2e"/>
+      <stop offset="100%" style="stop-color:#03060f"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2563eb"/>
+      <stop offset="100%" style="stop-color:#00d4ff"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Subtle grid lines -->
+  <line x1="0" y1="210" x2="1200" y2="210" stroke="rgba(79,142,247,0.06)" stroke-width="1"/>
+  <line x1="0" y1="420" x2="1200" y2="420" stroke="rgba(79,142,247,0.06)" stroke-width="1"/>
+  <line x1="400" y1="0" x2="400" y2="630" stroke="rgba(79,142,247,0.06)" stroke-width="1"/>
+  <line x1="800" y1="0" x2="800" y2="630" stroke="rgba(79,142,247,0.06)" stroke-width="1"/>
+
+  <!-- Glow orb -->
+  <ellipse cx="900" cy="315" rx="320" ry="280" fill="rgba(37,99,235,0.07)"/>
+  <ellipse cx="900" cy="315" rx="180" ry="160" fill="rgba(0,212,255,0.05)"/>
+
+  <!-- Left accent bar -->
+  <rect x="80" y="180" width="4" height="270" fill="url(#accent)" rx="2"/>
+
+  <!-- S. logo -->
+  <text x="80" y="145" font-family="Arial Black, sans-serif" font-weight="900" font-size="42" fill="white" letter-spacing="-1">S</text>
+  <circle cx="126" cy="133" r="5" fill="#00d4ff"/>
+
+  <!-- Name -->
+  <text x="100" y="270" font-family="Arial Black, sans-serif" font-weight="900" font-size="72" fill="white" letter-spacing="-2">SHAAMBHAVI</text>
+  <text x="100" y="355" font-family="Arial Black, sans-serif" font-weight="900" font-size="72" letter-spacing="-2">
+    <tspan fill="url(#accent)">SIVAPPUGAZ</tspan>
+  </text>
+
+  <!-- Role -->
+  <text x="100" y="415" font-family="Arial, sans-serif" font-weight="400" font-size="24" fill="rgba(160,196,255,0.75)" letter-spacing="1">Full-Stack Developer &amp; AI Engineer</text>
+
+  <!-- Divider -->
+  <line x1="100" y1="445" x2="560" y2="445" stroke="rgba(79,142,247,0.25)" stroke-width="1"/>
+
+  <!-- Stats -->
+  <text x="100" y="490" font-family="Arial Black, sans-serif" font-weight="900" font-size="28" fill="white">2.5+</text>
+  <text x="100" y="515" font-family="Arial, sans-serif" font-size="13" fill="rgba(255,255,255,0.35)" letter-spacing="2">YRS EXPERIENCE</text>
+
+  <text x="240" y="490" font-family="Arial Black, sans-serif" font-weight="900" font-size="28" fill="white">9.31</text>
+  <text x="240" y="515" font-family="Arial, sans-serif" font-size="13" fill="rgba(255,255,255,0.35)" letter-spacing="2">GPA / 10</text>
+
+  <text x="370" y="490" font-family="Arial Black, sans-serif" font-weight="900" font-size="28" fill="white">2</text>
+  <text x="370" y="515" font-family="Arial, sans-serif" font-size="13" fill="rgba(255,255,255,0.35)" letter-spacing="2">PAPERS PUBLISHED</text>
+
+  <!-- Available badge -->
+  <rect x="100" y="545" width="280" height="36" rx="18" fill="rgba(52,211,153,0.08)" stroke="rgba(52,211,153,0.3)" stroke-width="1"/>
+  <circle cx="122" cy="563" r="5" fill="#34d399"/>
+  <text x="136" y="568" font-family="Arial, sans-serif" font-weight="600" font-size="13" fill="#34d399" letter-spacing="1">OPEN TO OPPORTUNITIES · AU</text>
+
+  <!-- URL -->
+  <text x="1120" y="590" font-family="Arial, sans-serif" font-size="14" fill="rgba(255,255,255,0.2)" text-anchor="end" letter-spacing="0.5">shaambhavisivappugaz-portfolio-zeta.vercel.app</text>
+</svg>
